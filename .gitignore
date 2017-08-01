@@ -3,3 +3,4 @@ test.pdf
 node_modules/
 creds-john.js
 package-lock.json
+*.pdf

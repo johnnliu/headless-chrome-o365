@@ -40,12 +40,22 @@ const creds = require('./creds');
     // Wait for window.onload before doing stuff.
     Page.loadEventFired(async () => {
 
-        var data = await Page.printToPDF();
+        // if you need to wait a few seconds for responsive pages to load, suite-nav bar to catch up
+        await new Promise((resolve) => { setTimeout(resolve, 2000) });
+
+        console.log(await Page.getLayoutMetrics());
+
+        var data = await Page.printToPDF({
+            printBackground: true,
+            scale: 0.5,
+            landscape: true,
+            width: 1800           
+        });
 
         //if you want to see base64 pdf
         console.log(data);
 
-        fs.writeFile("test.pdf", data.data, "base64", function (err) {
+        fs.writeFile("team-site.pdf", data.data, "base64", function (err) {
             if (err) {
                 return console.log(err);
             }
